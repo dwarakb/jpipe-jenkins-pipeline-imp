@@ -58,9 +58,10 @@ class CDInfraAsCodePlugin extends Plugin {
 
             event.script.sh "ls -lah"
 
+            event.script.println "${this}"
+
             event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
-                event.script.sh "ls -lah"
-                // event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
+                event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
             }
 
             event.script.sh "git config user.email '${this.gitEmail}'"
