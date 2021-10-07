@@ -55,6 +55,8 @@ class CDInfraAsCodePlugin extends Plugin {
                 changelog: false
             );
 
+            event.script.sh "ls -lah"
+
             event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
                 event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
             }
