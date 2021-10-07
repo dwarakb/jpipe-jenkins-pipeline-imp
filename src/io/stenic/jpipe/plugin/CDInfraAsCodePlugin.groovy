@@ -56,7 +56,7 @@ class CDInfraAsCodePlugin extends Plugin {
                 changelog: false
             );
 
-            event.script.sh "ls -lah ${this.yamlPath}"
+            event.script.sh "ls -lah ${yamlPath}"
             event.script.sh "ls -lah ${this.yqDockerImage}"
             event.script.sh "ls -lah ${event.version}"
 
