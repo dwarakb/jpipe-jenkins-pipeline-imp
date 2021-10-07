@@ -54,9 +54,9 @@ class CDInfraAsCodePlugin extends Plugin {
             event.script.sh "echo credentialId ${this.credentialId}"
 
             event.script.git(
-                url: this.repository,
-                branch: this.branch,
-                credentialsId: this.credentialId,
+                url: "${this.repository}",
+                branch: "${this.branch}",
+                credentialsId: "${this.credentialId}",
                 changelog: false
             )
 
