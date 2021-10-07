@@ -58,7 +58,7 @@ class CDInfraAsCodePlugin extends Plugin {
                 branch: this.branch,
                 credentialsId: this.credentialId,
                 changelog: false
-            );
+            )
 
             event.script.sh "echo credentialId ${this.credentialId}"
 
