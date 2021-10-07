@@ -60,6 +60,8 @@ class CDInfraAsCodePlugin extends Plugin {
                 changelog: false
             );
 
+            event.script.sh "echo credentialId ${this.credentialId}"
+
             event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
                 event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
             }
