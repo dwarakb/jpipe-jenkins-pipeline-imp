@@ -49,7 +49,9 @@ class CDInfraAsCodePlugin extends Plugin {
             event.script.sh 'git config --global credential.helper cache'
             event.script.sh "ls -lah"
 
-            event.script.sh "ls -lah ${this.repository}"
+            event.script.sh "echo repo ${this.repository}"
+            event.script.sh "echo branch ${this.branch}"
+            event.script.sh "echo credentialId ${this.credentialId}"
 
             event.script.git(
                 url: this.repository,
@@ -57,10 +59,6 @@ class CDInfraAsCodePlugin extends Plugin {
                 credentialsId: this.credentialId,
                 changelog: false
             );
-
-            event.script.sh "ls -lah ${yamlPath}"
-            event.script.sh "ls -lah ${this.yqDockerImage}"
-            event.script.sh "ls -lah ${event.version}"
 
             event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
                 event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
