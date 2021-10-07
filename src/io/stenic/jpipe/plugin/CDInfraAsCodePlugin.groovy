@@ -46,6 +46,9 @@ class CDInfraAsCodePlugin extends Plugin {
         }
 
         event.script.dir( "${System.currentTimeMillis()}" ) {
+            event.script.sh 'git config --global credential.helper cache'
+            event.script.sh "ls -lah"
+
             event.script.git(
                 url: this.repository,
                 branch: this.branch,
