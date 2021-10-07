@@ -67,16 +67,16 @@ class CDInfraAsCodePlugin extends Plugin {
 
             event.script.sh "echo credentialId ${this.credentialId}"
 
-            event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
-                event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
-            }
+            // event.script.docker.image(this.yqDockerImage).inside("--entrypoint=''") {
+            //     event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
+            // }
 
-            event.script.sh "git config user.email '${this.gitEmail}'"
-            event.script.sh "git config user.name '${this.gitUser}'"
+            // event.script.sh "git config user.email '${this.gitEmail}'"
+            // event.script.sh "git config user.name '${this.gitUser}'"
 
-            event.script.sh "git add ${this.filePath}"
-            event.script.sh "git commit -m 'Update version ${this.filePath} to ${event.version}'"
-            event.script.sh "git push origin ${this.branch}"
+            // event.script.sh "git add ${this.filePath}"
+            // event.script.sh "git commit -m 'Update version ${this.filePath} to ${event.version}'"
+            // event.script.sh "git push origin ${this.branch}"
         }
 
         return true
