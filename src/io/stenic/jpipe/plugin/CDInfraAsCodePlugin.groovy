@@ -44,7 +44,6 @@ class CDInfraAsCodePlugin extends Plugin {
         if (this.credentialId == '') {
             this.credentialId = event.script.scm.getUserRemoteConfigs()[0].getCredentialsId();
         }
-
         event.script.dir( "${System.currentTimeMillis()}" ) {
             event.script.sh 'git config --global credential.helper cache'
             event.script.sh "ls -lah"
@@ -53,12 +52,18 @@ class CDInfraAsCodePlugin extends Plugin {
             event.script.sh "echo branch ${this.branch}"
             event.script.sh "echo credentialId ${this.credentialId}"
 
-            event.script.git(
-                url: "${this.repository}",
-                branch: "${this.branch}",
-                credentialsId: "${this.credentialId}",
-                changelog: false
-            )
+            event.script.checkout([
+                $class: 'GitSCM',
+                branches: [[name: this.branch]],
+                extensions: [
+                    [$class: 'CloneOption', noTags: true, reference: '', shallow: true]
+                ],
+                submoduleCfg: [],
+                userRemoteConfigs: [[
+                    credentialsId: this.credentialId,
+                    url: this.repository
+                ]]
+            ])
 
             event.script.sh "echo credentialId ${this.credentialId}"
 
