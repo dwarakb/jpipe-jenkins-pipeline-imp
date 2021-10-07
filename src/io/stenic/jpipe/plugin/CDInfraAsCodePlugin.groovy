@@ -45,7 +45,6 @@ class CDInfraAsCodePlugin extends Plugin {
             this.credentialId = event.script.scm.getUserRemoteConfigs()[0].getCredentialsId();
         }
         event.script.dir( "${System.currentTimeMillis()}" ) {
-            event.script.sh 'git config --global credential.helper cache'
             event.script.sh "ls -lah"
 
             event.script.sh "echo repo ${this.repository}"
