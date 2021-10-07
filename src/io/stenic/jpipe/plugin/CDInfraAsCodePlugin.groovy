@@ -46,6 +46,8 @@ class CDInfraAsCodePlugin extends Plugin {
         }
 
         event.script.dir( "${System.currentTimeMillis()}" ) {
+            event.script.sh 'git config --global credential.helper cache'
+
             event.script.git(
                 url: this.repository,
                 branch: this.branch,
@@ -57,14 +59,12 @@ class CDInfraAsCodePlugin extends Plugin {
                 event.script.sh "yq eval --inplace '${this.yamlPath} = \"${event.version}\"' ${this.filePath}";
             }
 
-            event.script.sshagent(credentials: [this.credentialId]) {
-                event.script.sh "git config user.email '${this.gitEmail}'"
-                event.script.sh "git config user.name '${this.gitUser}'"
+            event.script.sh "git config user.email '${this.gitEmail}'"
+            event.script.sh "git config user.name '${this.gitUser}'"
 
-                event.script.sh "git add ${this.filePath}"
-                event.script.sh "git commit -m 'Update version ${this.filePath} to ${event.version}'"
-                event.script.sh "git push origin ${this.branch}"
-            }
+            event.script.sh "git add ${this.filePath}"
+            event.script.sh "git commit -m 'Update version ${this.filePath} to ${event.version}'"
+            event.script.sh "git push origin ${this.branch}"
         }
 
         return true
