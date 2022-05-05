@@ -7,4 +7,4 @@ test:
 		-v maven-repo:/root/.m2 \
 		-v $(PWD):/app \
 		-w /app \
-		$(DOCKER_IMAGE) mvn clean test
+		$(DOCKER_IMAGE) mvn clean install -U
