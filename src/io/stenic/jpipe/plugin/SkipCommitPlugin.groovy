@@ -8,28 +8,28 @@ class SkipCommitPlugin extends Plugin {
     public Map getSubscribedEvents() {
         return [
             "${Event.PREPARE}": [
-                [{ event -> this.doSkipCommit(event) }, 1],
+                [{ event -> this.doSkipCommit(event, Event.PREPARE) }, 1],
             ],
             "${Event.BUILD}": [
-                [{ event -> this.doSkipCommit(event) }, -10000],
+                [{ event -> this.doSkipCommit(event, Event.BUILD) }, -10000],
             ],
             "${Event.TEST}": [
-                [{ event -> this.doSkipCommit(event) }, -10000],
+                [{ event -> this.doSkipCommit(event, Event.TEST) }, -10000],
             ],
             "${Event.PUBLISH}": [
-                [{ event -> this.doSkipCommit(event) }, -10000],
+                [{ event -> this.doSkipCommit(event, Event.PUBLISH) }, -10000],
             ],
             "${Event.DEPLOY}": [
-                [{ event -> this.doSkipCommit(event) }, -10000],
+                [{ event -> this.doSkipCommit(event, Event.DEPLOY) }, -10000],
             ],
         ]
     }
 
-    public Boolean doSkipCommit(Event event) {
+    public Boolean doSkipCommit(Event event, String stageName) {
         // If the last commit includes [ci skip], do not proceed.
         def commitMsg = event.script.sh(script: "git log -n 1 HEAD", returnStdout: true)
         if (commitMsg.matches(/(?ms)(.*\[(skip ci|ci skip)\].*)/)) {
-            Utils.markStageSkippedForConditional(STAGE_NAME)
+            Utils.markStageSkippedForConditional(stageName)
             // event.script.currentBuild.description = 'Skipped by [skip ci]'
             // event.script.currentBuild.result = event.script.currentBuild.getPreviousBuild().result
 
