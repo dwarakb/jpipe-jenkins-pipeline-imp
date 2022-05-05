@@ -95,7 +95,7 @@ class ConventionalCommitPlugin extends Plugin {
 
     public void doPublish(Event event) {
         this.publishVersion(event.version, event.script, event.env)
-        event.script.script.currentBuild.displayName = event.version
+        event.script.currentBuild.displayName = event.version
     }
 
     Boolean publishVersion(version, script, env) {
