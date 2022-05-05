@@ -8,7 +8,7 @@ class SkipCommitPlugin extends Plugin {
     public Map getSubscribedEvents() {
         return [
             "${Event.PREPARE}": [
-                [{ event -> this.doSkipCommit(event) }, -10000],
+                [{ event -> this.doSkipCommit(event) }, 1],
             ],
             "${Event.BUILD}": [
                 [{ event -> this.doSkipCommit(event) }, -10000],
