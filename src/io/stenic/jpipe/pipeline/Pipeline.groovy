@@ -28,7 +28,6 @@ class Pipeline implements Serializable {
 
         this.script.stage(Event.PREPARE) {
             this.eventDispatcher.dispatch(Event.PREPARE, event)
-            this.script.currentBuild.displayName = event.version
         }
 
         this.script.stage(Event.BUILD) {
