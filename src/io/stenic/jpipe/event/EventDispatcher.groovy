@@ -10,8 +10,8 @@ class EventDispatcher implements Serializable {
     }
 
     public void addListener(String eventName, Closure listener, Integer priority) {
-        this.listeners[eventName] ?= [:];
-        this.listeners[eventName][priority] ?= [];
+        this.listeners[eventName] = this.listeners[eventName] ?: [:]
+        this.listeners[eventName][priority] = this.listeners[eventName][priority] ?: []
         this.listeners[eventName][priority] += listener
     }
 
