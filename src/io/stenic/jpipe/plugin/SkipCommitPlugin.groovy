@@ -53,9 +53,9 @@ class SkipCommitPlugin extends Plugin {
             //     event.script.currentBuild.getRawBuild().setResult(hudson.model.Result.fromString(event.script.currentBuild.getPreviousBuild().result))
             // } catch (RejectedAccessException e) {}
 
-            return false
+            return true
         }
 
-        return true
+        return false
     }
 }
