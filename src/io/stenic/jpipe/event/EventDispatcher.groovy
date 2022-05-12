@@ -4,7 +4,11 @@ class EventDispatcher implements Serializable {
     private Map listeners = [:];
 
     public Event dispatch(String eventName, Event event) {
-        this.getListeners(eventName).each{ it(event) }
+        def loop = true
+        this.getListeners(eventName)
+            .each {
+                if (loop) { loop = it(event) }
+            }
 
         return event
     }
