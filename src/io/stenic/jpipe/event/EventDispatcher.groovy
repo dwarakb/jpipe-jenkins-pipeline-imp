@@ -4,7 +4,7 @@ class EventDispatcher implements Serializable {
     private Map listeners = [:];
 
     public Event dispatch(String eventName, Event event) {
-        def loop = true
+        boolean loop = true
         this.getListeners(eventName)
             .each {
                 if (loop) { loop = it(event) }
@@ -14,18 +14,12 @@ class EventDispatcher implements Serializable {
     }
 
     public void addListener(String eventName, Closure listener, Integer priority) {
-        if (!this.listeners[eventName]) {
-            this.listeners[eventName] = [:];
-        }
-        if (!this.listeners[eventName][priority]) {
-            this.listeners[eventName][priority] = [];
-        }
-        
+        this.listeners[eventName] ?= [:];
+        this.listeners[eventName][priority] ?= [];
         this.listeners[eventName][priority] += listener
     }
 
-    public void addSubscriber(EventSubscriber subscriber)
-    {
+    public void addSubscriber(EventSubscriber subscriber) {
         subscriber.getSubscribedEvents().each { eventName, listeners ->
             listeners.each { it -> 
                 this.addListener(eventName, it[0], it[1] ?: 0)
