@@ -36,12 +36,14 @@ class SkipCommitPlugin extends Plugin {
             def commitMsg = event.script.sh(script: "git log -n 1 HEAD", returnStdout: true)
             this.doSkip = commitMsg.matches(/(?ms)(.*\[(skip ci|ci skip)\].*)/)
             this.isResolved = true
+            event.script.println("Found skip ci in commit message")
         }
 
         // If the last commit includes [ci skip], do not proceed.
         
         if (this.doSkip) {
             Utils.markStageSkippedForConditional(stageName)
+            event.script.println("Stage skipped by SkipCommitPlugin")
             // event.script.currentBuild.description = 'Skipped by [skip ci]'
             // event.script.currentBuild.result = event.script.currentBuild.getPreviousBuild().result
 
