@@ -1,5 +1,7 @@
 ## Jpipe
 
+Inline Edit
+
 > Jpipe aims to be a flexible, customizabe and reusable project containing both plugins and base pipelines.
 
 ## Usage
