@@ -1,6 +1,6 @@
 # Jpipe
 
-Inline Edit
+Inline Edit By Dev 2
 
 > Jpipe aims to be a flexible, customizabe and reusable project containing both plugins and base pipelines.
 
